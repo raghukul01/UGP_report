@@ -19,8 +19,8 @@
 
 
 %==================Header details======================
-\newcommand\NAME{Raghukul Raman}
-\newcommand\ANDREWID{160538}
+\newcommand\NAME{Raghukul Raman Sudhanshu Jaiswal}
+\newcommand\ANDREWID{}
 \newcommand\HWNUM{4}
 \newcommand\COURSE{CS395}
 %======================================================
@@ -54,7 +54,7 @@ Some salient features of using an auction are:
 	\item and may more...
 \end{itemize}
 Auctions have become an integral part of today's world, they are used extensively in almost every field. Some widely used auctions are spectrum auction, treasury auction, auction for advertisement, auctions for players such as in IPL or EPL leagues.\\ \\
-Considering the need for auctions, we hereby present a software, which is generic enough to conduct several different auctions. \textbf{Auctionit}, is a software on which you can 
+Considering the need for auctions, we hereby present a software, which is generic enough to conduct several different auctions called \textbf{Auctionit}.
 \\
 
 \section*{Introduction}
@@ -62,8 +62,20 @@ AuctionIt allows auction designers to create and host auctions, users can place 
 The software, categorizes auction designers and bidders as different types of users. These accounts are password protected to prevent misuse and to ensure the auction is not compromised while it runs.
 
 Before we started designing AuctionIt, we studied about auctions. We read papers/lectures to understand the reasons why first price and second price auctions are so popular and widely used. We also read and learnt about the auction process for large scale real life auctions take place like treasury auctions or spectrum auctions. We read about auctions with multiple objects and how these large scale auctions deal with having multiple objects which may be similar and how they setup rules to prevent allocating a majority of a commodity to a particular set of bidders.
-\section*{Theory}
+\section*{Theory Review}
+We read a paper on the problem of reallocation of the radio frequencies given to television stations, so as to clear spectrum for wireless internet access. The major challenges that are faced to conduct such an auction are:\\
+1) The channels to and their geographical locations need to be continuous for wireless so each owner becomes essential and can demand a higher price.\\
+2) Spectrum interference is required to be tackled while maintaining price clearing and continuous reallocation.
 
+To overcome these challenges an Incentive auction is conducted. An incentive auction consists of two separate auctions - a backward auction to determine the price at which broadcasters will sell their spectrum usage rights and a forward auction to identify the prices companies will pay for wireless allocation. Both forward and backward auctions are VCG auctions and belongs to a class of deferred acceptance algorithm, forward auction's bidding increases with rounds while the back auction is a decreasing clock auction.
+\\\\
+We also read about Treasury auctions, where the government sells securities to finance its debts. Treasury auctions are conducted either as discriminatory price auctions or as uniform price auctions, both of these are used by different governments around the world. We can define both of them as - 
+
+Discriminatory Price auction: Different winning bidders are charged different prices. In case of a single object, this reduces to the first-price auction.
+
+Uniform Price auction: All winning bidders pay an average uniform price. For a single item, this reduces to second-price auction.
+
+The uniform-price method in less affected by winners curse and so it outperforms the discriminatory auction concerning revenue generation. But most of the research reveals that discriminatory auctions are most common currently in real life, and this shows a contrast between theory and practice.
 \section*{Design Details}
 For the design, we can seperate AuctionIt into two major sections -  the database and the main program/front end. The database consists of the following set of tables : - 
 \section*{Further improvements}
