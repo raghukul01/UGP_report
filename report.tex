@@ -10,7 +10,7 @@
 \usepackage{fancyhdr}
 \usepackage{pdfpages} 
 \setlength{\parindent}{0pt}
-
+\fancypagestyle{note_1}{\fancyfoot[R]{\textit{* These kind of auction are sealed bid auction.}}}
 \pagestyle{fancy}
 \fancyhf{}
 \lhead{\textbf{\NAME\ (\ANDREWID)}}
@@ -19,8 +19,8 @@
 
 
 %==================Header details======================
-\newcommand\NAME{Raghukul Raman Sudhanshu Jaiswal Chaman Agarwal}
-\newcommand\ANDREWID{}
+\newcommand\NAME{Raghukul Raman}
+\newcommand\ANDREWID{160538}
 \newcommand\HWNUM{4}
 \newcommand\COURSE{CS395}
 %======================================================
@@ -57,12 +57,62 @@ Auctions have become an integral part of today's world, they are used extensivel
 Considering the need for auctions, we hereby present a software, which is generic enough to conduct several different auctions called \textbf{Auctionit}.
 \\
 
+
+\pagebreak
 \section*{Introduction}
 AuctionIt allows auction designers to create and host auctions, users can place bids on items in the auction and can see the results and price they have to pay at the end of the auction process. Auction Designers can modify and create new fields which allow them to get more data from the bidders that is relevant to the auction being held. They can also choose from pre-defined auction templates to quickly set up some of the more common auctions. They can also define their custom allocation rules and pricing rules. This allows to set up complicated rules for pricing and allocation and thus provides more freedom to the designer to create a wide variety of auctions. 
 The software, categorizes auction designers and bidders as different types of users. These accounts are password protected to prevent misuse and to ensure the auction is not compromised while it runs.
 
 Before we started designing AuctionIt, we studied about auctions. We read papers/lectures to understand the reasons why first price and second price auctions are so popular and widely used. We also read and learnt about the auction process for large scale real life auctions take place like treasury auctions or spectrum auctions. We read about auctions with multiple objects and how these large scale auctions deal with having multiple objects which may be similar and how they setup rules to prevent allocating a majority of a commodity to a particular set of bidders.
+
+\pagebreak
+\thispagestyle{note_1}
 \section*{Theory Review}
+\subsection*{Terminologies}
+Before we proceed through formal text, let's get familiar with some of the terms. Here bid vector $\mathbf{b} = (b_1, b_2,\ldots,b_n)$, each component represent a bid from a bidder.
+
+\begin{itemize}
+    \item[-] \textbf{Valuation:} It is the maximum price or anything equivalent to that, which denote the willingness-to-pay. In general valuations are private entity, i.e they are unknown to other bidders and the seller.  
+
+
+    \item[-] \textbf{Sealed bid Auction:} In these kind of auctions the bids are private, or in other words only the seller knows bids of each person. Bidders don't know what other bidder's bid. After collecting all the bids, seller decides winner and finally decides a selling price. There can be many variant of this, based on allocation rule, payment rule.\ref{temp}
+
+    \item[-] \textbf{First-Price Auction*:} In these auctions, highest bidder pays the price that they submit. \label{temp}
+
+    \item[-] \textbf{Second-Price Auction*:} Allocations rule in these auction is similar to that of first price auction, i.e highest bidder is selected as winner. However the amount he has to pay is equal to second highest bid in the auction. This type of auction is also know as \textbf{Vikrey Auction}.
+
+    \item[-] \textbf{Allocation Rule:} This rule indicates who will win the auction. This can be seen as a function of bid vector.
+
+    \item[-] \textbf{Payment Rule:} This indicates what the winner has to pay, similar to allocation rule, this can also be understood as a function of bid vector.
+
+    \item[-] \textbf{Dutch Auction:} This is a special type of auction in which the seller, announces an inital price for a product, and then keeps on reducing it, until some buyer agrees to take it.
+
+    \item[-] \textbf{English Auction:} This is an open bid auction (bids are present openly i.e known to other bidders), similar to first-price auction in allocation and pricing rule.
+
+    \item[-] \textbf{Dominant Strategy:} It refers to a strategy, which gurantees to maximize a bidders utility, independent of what other bidders bid.
+
+    \item[-] \textbf{Utility:} It refers to the net gain after the auction is over. If the bidder wins the auction, then his utility is increased by $v_i$ (his valuation). If he loses, his net utility = $0$.
+\end{itemize}
+\subsection*{Second-Price Auction, DSIC and social welfare}
+Second price auctions are really special in the sense that there exist a dominant strategy. Let us denote the valuations of bidder $i$ by $v_i$, his bid by $b_i$, and the bid vector by $\mathbf{b}$. Now lets shift our focus on bidder $i$, let $B = \max_{j\ne i} b_j$. 
+Assume that bidder $i$ bids truely, in other words his bid is equal to his valuation for the object. Or $b_i = v_i$
+
+So, if $v_i < B$, then with true bidding his net utility gain $= 0$. If $v_i > B$, then he wins, and his utility $= v_i - B$
+
+\textbf{Observation 1:} Truthful bidding gives a non negative utility, irrespective of other bidders.  \\ \\
+\textbf{Dominant-Strategy Incentive Compatible(DSIC):} An auction is DSIC if
+\begin{itemize}
+    \item[-] Truthful bidding is always a dominant strategy.
+    \item[-] Truthful bidders always obtain non negative utility.
+\end{itemize}
+\textbf{Social Welfare:} Social welfare ($\mathbf{W}$) is defined as the net welfare of society, mathematically $\mathbf{W} = \sum_{i=1}^{n}v_i x_i$. \\ \\
+\textbf{Claim:} Second-Price auction is DSIC and welfare maximizing.
+\begin{proof}
+Truthful bidding is clearly a dominant strategy, 
+\end{proof}
+
+
+\pagebreak
 We read a paper on the problem of reallocation of the radio frequencies given to television stations, so as to clear spectrum for wireless internet access. The major challenges that are faced to conduct such an auction are:\\
 1) The channels to and their geographical locations need to be continuous for wireless so each owner becomes essential and can demand a higher price.\\
 2) Spectrum interference is required to be tackled while maintaining price clearing and continuous reallocation.
@@ -76,22 +126,110 @@ Discriminatory Price auction: Different winning bidders are charged different pr
 Uniform Price auction: All winning bidders pay an average uniform price. For a single item, this reduces to second-price auction.
 
 The uniform-price method in less affected by winners curse and so it outperforms the discriminatory auction concerning revenue generation. But most of the research reveals that discriminatory auctions are most common currently in real life, and this shows a contrast between theory and practice.
-\section*{Design Details}
-For the design, we can seperate AuctionIt into two major sections -  the database and the main program/front end. The database consists of the following set of tables : - \\
-\begin{enumerate}
-    \item \textbf{User} Table\\
-     - The user table stores information about the user and also his login credentials such as username and password details.
-    \item \textbf{Designer} Table\\
-    - The designer table stores the login credentials for the auction designers, it also stores a list of past auctions created by the designer with auction-id and revenue generated by the auction. If the designer has created custom allocation and pricing rules then we store their ids (from Table 7 and Table 8) for easy access while creating later auctions.
-    \item \textbf{Default Auction} Table
-    \item \textbf{Live Auction} Table
-    \item \textbf{Bid} Table
-    \item \textbf{Ranking} Table
-    \item \textbf{Allocation Rules} Table
-    \item \textbf{Pricing Rules} Table
-\end{enumerate}
-\section*{Further improvements}
 
-\section*{References}
+
+\pagebreak
+\section*{Design Details}
+In this section we discuss the fabrication details for our software. First of all let's get familiar with the database structure.
+\subsection*{Databases}
+\begin{itemize}
+    \item \textbf{User Table:} This table consist of all the data(login details) relevant to a particular bidder.
+    \begin{itemize}
+        \item[-] User ID: this id is unique for each user, it is initiated by a counter value and increments on addition of new user.
+        \item[-] Login details: email ID, username, password (hashed) and salt.
+        \item[-] Profile details: such as gender, date of birth etc.
+        \item[-] Past auctions: this is stored in form of list which include all the past auction which this user has taken part in.
+
+    \end{itemize}
+    We are storing the past auctions of a bidder, so that we can show his past bids with ease, without explicitly searching in all the auction table.
+
+    \item \textbf{Designer Table:} This table contain information of all sellers or in other words auction creators. The features for a particular designer in our table are:
+    \begin{itemize}
+        \item[-] Designer ID: similar to user ID.
+        \item[-] All the data that we have in user table (since a designer is also a user).
+        \item[-] Past auction IDs: The auctions that this designer has created, along with the total revenue from that auction. Similar to user table, these are also stored in from of list of pair.
+        \item[-] Pricing and Allocation rules: These contain the pricing rule ID and allocation rule ID of the custom allocation/pricing rule, that this designer has created/used.
+    \end{itemize}
+    In this designer table we explicity store the auction ids, which this designer created in past so as to display their details, instead of checking each auction and getting all auction created by this designer explicity. Past auction will also hep the designer create new auction with slight modification of the past auctions. Same applies for storing pricing and allocation rules, he can use them in new auctions.
+
+    \item \textbf{Default Auction Table:} These include the default auction that we provide in our system. A designer can easily import them, modify some of the features and make it live! Some of the features stored in this table are:
+    \begin{itemize}
+        \item[-] Default auction ID: unique to each auction.
+        \item[-] Ranking table address. 
+        \item[-] Duration of auction.
+        \item[-] Base price for the product.
+        \item[-] Pricing rule: Stores the rule id for the rule which this auction uses.
+        \item[-] Allocation rule: Similar to pricing rule.
+        \item[-] Bid unit: Denotes the currency/mode of payment.
+        \item[-] Revenue: net gain by this auction.
+        \item[-] Bid step size: this signifies the net increase in bid value, in case of tie. For example in english auction the price of good is increased in step till only one user is willing to buy.
+        \item[-] Item description: quantity, brand etc.
+        \item[-] Organizer details.
+        \item[-] Bidder qualifying criteria: that each bidder must satisfy in order to take part in.
+    \end{itemize}
+    Note that some of the features listed here are only relevant to auctions which are live and running, for eg. revenue.
+    \item \textbf{Live auction table:} This table stores the detail corresponding to a running auction. Some features of this table are:
+    \begin{itemize}
+        \item[-] Auction ID: unique to each auction.
+        \item[-] Auction label: In case of sequential auction this feature is relevant, where subsequent auction is similar to previous one.
+        \item[-] Designer ID: user ID of owner.
+        \item[-] Creation date
+        \item[-] Start / End date: denotes the duration when auction would be live.
+        \item[-] features from default auction tables: since each auction is an instance of default acution with some new features.
+        \item[-] Ranking table address: a pointer to the table which stores the live bids of this auction.
+    \end{itemize}
+
+    \item \textbf{Ranking table:} this stores the bids for a particular auction. Note that for each auction we'll create an instance of this table, and store the pointer to this table in live auction table. it stores:
+    \begin{itemize}
+        \item[-] Serial No.
+        \item[-] Username
+        \item[-] Bid value
+    \end{itemize}
+    Whenever a user want to see the current leaderboard, we'll simply apply the allocation rule, and list out bidders in sorted order, with respect to their points.
+
+    \item \textbf{Allocation/Pricing rule table:} two tables containing designer ID, rule ID, raw code for the rule and the rule name (optional).
+\end{itemize}
+
+
+
+\pagebreak
+\begin{thebibliography}{9}
+
+\bibitem{treasury} 
+Leonardo Bartolini and Carlo Cottarelli.
+\textit{Designing Effective Auctions for Treasury Securities}. 
+Current issues in \texttt{ECONOMICS} and \texttt{FINANCE}, \textit{Vol. 3 No. 9, July 97}
+
+\bibitem{rbi} 
+Ravi Shankar and Sanjoy Bose. 
+\textit{Auctions of Government Securities in India –An Analysis.}
+Reserve Bank of India Occasional Papers,\textit{ Vol. 29 No. 3, Winter 2008}
+
+\bibitem{recent_adapt}
+Kenneth D. Garbade and Jeffrey F. Ingber.
+\textit{The Treasury Auction Process: Objectives, Structure, and Recent Adaptations.}
+Current issues in \texttt{ECONOMICS} and \texttt{FINANCE}, \textit{Vol. 11 No. 2, Feb 06}
+
+\bibitem{}
+Paul R. Milgrom.
+\textit{Auctions and Bidding: A Primer.}
+Journal of Economic Perspective, \textit{Vol. 3 No. 3, Summer 89}
+
+\bibitem{}
+Paul R. Milgrom and Robert J. Weber.
+\textit{A theory of auctions and competitive bidding - II.}
+1981
+
+\bibitem{}
+Kevin Leyton-Brown, Paul R. Milgrom and Ilya Segal.
+\textit{Economics and computer science of a radio spectrum reallocation.}
+PNAS, \textit{Vol. 114 No. 28, 2017}
+
+
+\bibitem{knuthwebsite} 
+Paul R. Milgrom.
+\textit{Business Activities.}
+\\\texttt{http://www.milgrom.net/business-activities}
+\end{thebibliography}
 \end{document}
 
